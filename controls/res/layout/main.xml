@@ -8,6 +8,20 @@
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="Hello World, CtrlActivity"
-    />
+    android:id="@+id/textview1"/>
+
+<Button
+    android:id="@+id/button_show_time"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Show Time" />
+
+<Button
+    android:id="@+id/button1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Show Time 2" 
+    android:onClick="showLocalTime"/>
+
 </LinearLayout>
 
