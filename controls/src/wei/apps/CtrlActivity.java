@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button; //引入类
 import android.view.View;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import java.util.Date;
 
 public class CtrlActivity extends Activity implements View.OnClickListener
@@ -15,7 +18,12 @@ public class CtrlActivity extends Activity implements View.OnClickListener
 	Button btn_show_time; //声明对象
 	TextView text_view_1;
 	EditText edit_text_1;
+	EditText edit_text_2;
 	
+	RadioGroup  radiogroup;
+	RadioButton radio0;
+	RadioButton radio1;
+	RadioButton radio2;
 	
     /** Called when the activity is first created. */
     @Override
@@ -29,6 +37,7 @@ public class CtrlActivity extends Activity implements View.OnClickListener
         
         text_view_1 = (TextView)findViewById(R.id.textview1);
         edit_text_1 = (EditText)findViewById(R.id.edittext1);
+        edit_text_2 = (EditText)findViewById(R.id.edittext2);
         
         edit_text_1.addTextChangedListener(new TextWatcher(){
 
@@ -47,6 +56,23 @@ public class CtrlActivity extends Activity implements View.OnClickListener
 					int arg3) {
 				// TODO Auto-generated method stub
 				
+			}
+        	
+        });
+        
+
+        radiogroup = (RadioGroup)findViewById(R.id.radioGroup);
+        radio0 = (RadioButton)findViewById(R.id.radio0);
+        radio1 = (RadioButton)findViewById(R.id.radio1);
+        radio2 = (RadioButton)findViewById(R.id.radio2);
+        
+        radiogroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				// TODO Auto-generated method stub
+				int id = arg0.getCheckedRadioButtonId();
+				RadioButton rbtn = (RadioButton)CtrlActivity.this.findViewById(id);
+				edit_text_2.setText("Radio"+rbtn.getText()+" Checked");
 			}
         	
         });
