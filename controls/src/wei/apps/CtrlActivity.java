@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button; //引入类
 import android.view.View;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import java.util.Date;
+import android.content.Intent;
 
 public class CtrlActivity extends Activity implements View.OnClickListener
 {
@@ -66,6 +68,14 @@ public class CtrlActivity extends Activity implements View.OnClickListener
         radio1 = (RadioButton)findViewById(R.id.radio1);
         radio2 = (RadioButton)findViewById(R.id.radio2);
         
+        radio2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				setTitle("Radio2 Checked");
+			}
+		});
+        
         radiogroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
@@ -73,6 +83,9 @@ public class CtrlActivity extends Activity implements View.OnClickListener
 				int id = arg0.getCheckedRadioButtonId();
 				RadioButton rbtn = (RadioButton)CtrlActivity.this.findViewById(id);
 				edit_text_2.setText("Radio"+rbtn.getText()+" Checked");
+				
+				if(id == radio0.getId())
+					setTitle("Radio0 Checked");
 			}
         	
         });
@@ -86,5 +99,15 @@ public class CtrlActivity extends Activity implements View.OnClickListener
     //另外一种添加按钮事件响应的方法
     public void showLocalTime(View theButton){
     	text_view_1.setText(new Date().toString());
+    }
+    
+    public void onClickHandleActivity(View view){
+    	switchto();
+    }
+    
+    private void switchto(){
+    	Intent intent = new Intent();
+    	intent.setClass(this,HandleActivity.class);
+    	startActivity(intent);
     }
 }

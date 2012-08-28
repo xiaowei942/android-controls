@@ -95,4 +95,10 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:text="HandleActivity" android:onClick="onClickHandleActivity"/>
+
 </LinearLayout>
