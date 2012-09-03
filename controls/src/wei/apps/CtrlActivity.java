@@ -6,6 +6,7 @@ import android.widget.Button; //引入类
 import android.view.View;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.CompoundButton;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.text.Editable;
@@ -14,9 +15,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import java.util.Date;
 import android.content.Intent;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 
 public class CtrlActivity extends Activity implements View.OnClickListener
 {
+	NotificationManager nmanager;
+    public static boolean NEWVERSION = false;
+    public static int NOTIFICATION_ID = 21321;
+    
 	Button btn_show_time; //声明对象
 	TextView text_view_1;
 	EditText edit_text_1;
@@ -89,6 +97,8 @@ public class CtrlActivity extends Activity implements View.OnClickListener
 			}
         	
         });
+        
+        ShowNotification();
     }
     
     //实现响应函数
@@ -109,5 +119,41 @@ public class CtrlActivity extends Activity implements View.OnClickListener
     	Intent intent = new Intent();
     	intent.setClass(this,HandleActivity.class);
     	startActivity(intent);
+    	System.exit(0);
+    }
+    
+    private void ShowNotification(){
+    	if(NEWVERSION){
+			nmanager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			RemoteViews rviews = new RemoteViews("wei.apps",R.layout.main);
+			PendingIntent pintent = PendingIntent.getActivity(this, 0, this.getIntent(), 0);
+			
+			Notification.Builder builder = new Notification.Builder(this);
+			builder.setContentText("常用组件测试程序")
+			.setContentTitle("CtrlActivity")
+			.setSmallIcon(R.drawable.p1)
+			.setTicker("CtrlActivity", rviews)
+			.setContentIntent(pintent)
+			.setWhen(System.currentTimeMillis());
+			
+			Notification notification = builder.getNotification();
+			nmanager.notify(NOTIFICATION_ID, notification);
+    	}else{
+	        /* 创建通知栏图标 */
+	        nmanager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+	        Notification notification = new Notification();
+	        
+	        PendingIntent pintent = PendingIntent.getActivity(this, 0, this.getIntent(), 0);
+	        notification.icon = R.drawable.p1;
+	        notification.when = System.currentTimeMillis();
+	        notification.tickerText = "Starting CtrlActivity!";
+	        notification.defaults = Notification.DEFAULT_SOUND;
+	        notification.setLatestEventInfo(this, "CtrlActivity", "常用组件测试程序", pintent);
+	        nmanager.notify(NOTIFICATION_ID, notification);
+    	}
+    }
+    
+    public void onDeleteNotifition(View view){
+    	nmanager.cancel(NOTIFICATION_ID);
     }
 }
